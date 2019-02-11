@@ -1,0 +1,26 @@
+---
+
+# Config
+caddy_bin_path: '/usr/local/bin/caddy'
+caddy_log_path: '/var/log/caddy'
+caddy_config_path: '/etc/caddy'
+caddy_ssl_path: '/etc/ssl/caddy'
+caddy_user_name: 'www-data'
+caddy_group_name: 'www-data'
+caddy_user_id: 33
+caddy_group_id: 33
+
+# TLS
+caddy_tls_key_type: 'p256'
+caddy_tls_ciphers: 'ECDHE-ECDSA-WITH-CHACHA20-POLY1305 ECDHE-ECDSA-AES128-GCM-SHA256 ECDHE-ECDSA-AES256-GCM-SHA384 ECDHE-ECDSA-AES128-CBC-SHA ECDHE-ECDSA-AES256-CBC-SHA'
+caddy_tls_curves: 'X25519 p521 p384 p256'
+caddy_tls_dns_enabled: false
+
+# Vhosts
+caddy_vhosts: []
+caddy_vhost_defaults:
+  template: 'reverse.j2'
+  gzip: false
+  reverse_host: 'localhost'
+  reverse_port: 80
+  security_headers: false

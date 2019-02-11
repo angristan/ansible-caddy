@@ -1,0 +1,7 @@
+---
+
+- name: Add vhost
+  notify: caddy reload
+  template:
+    src: "{{ vhost.template }}"
+    dest: "{{ caddy_config_path }}/vhosts/{{ vhost.name }}"

@@ -1,0 +1,78 @@
+---
+
+- name: Install setcap
+  apt:
+    name: libcap2-bin
+
+- name: Set capability on the caddy binary file to be able to bind to TCP port <1024
+  capabilities:
+    path: "{{ caddy_bin_path }}"
+    capability: cap_net_bind_service+ep
+
+- name: Add caddy group
+  group:
+    name: "{{ caddy_group_name }}"
+    gid: "{{ caddy_group_id }}"
+
+- name: Add caddy user
+  user:
+    name: "{{ caddy_user_name }}"
+    uid: "{{ caddy_user_id }}"
+    group: "{{ caddy_group_id }}"
+    home: '/var/www'
+    create_home: false
+    shell: '/usr/sbin/nologin'
+    system: true
+
+- name: Create Caddy systemd unit file
+  notify: service modified
+  template:
+    src: caddy.service.j2
+    dest: /etc/systemd/system/caddy.service
+    mode: 0644
+
+- name: Create config directory
+  file:
+    path: "{{ caddy_config_path }}"
+    state: directory
+    owner: root
+    group: root
+
+- name: Create SSL directory
+  file:
+    path: "{{ caddy_ssl_path }}"
+    state: directory
+    owner: root
+    group: "{{ caddy_user_name }}"
+    mode: 0770
+
+- name: Create log directory
+  file:
+    path: "{{ caddy_log_path }}"
+    state: directory
+    owner: "{{ caddy_user_name }}"
+    group: "{{ caddy_user_name }}"
+
+- name: Add Caddyfile
+  notify: caddy restart
+  copy:
+    src: 'Caddyfile'
+    dest: "{{ caddy_config_path }}/Caddyfile"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy TLS config snippet
+  notify: caddy restart
+  template:
+    owner: root
+    group: root
+    mode: 0644
+    src: 'tls.conf.j2'
+    dest: "{{ caddy_config_path }}/snippets/tls.conf"
+
+- name: Enable and start Caddy service
+  service:
+    name: caddy.service
+    state: started
+    enabled: true

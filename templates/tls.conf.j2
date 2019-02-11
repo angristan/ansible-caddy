@@ -1,0 +1,9 @@
+{{ ansible_managed | comment(decoration="# ") }}
+tls {
+  {% if caddy_tls_dns_enabled -%}
+  dns {{ caddy_tls_dns_provider }}
+  {% endif -%}
+  key_type {{ caddy_tls_key_type }}
+  ciphers {{ caddy_tls_ciphers }}
+  curves {{ caddy_tls_curves }}
+}
