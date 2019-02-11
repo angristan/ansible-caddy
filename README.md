@@ -2,7 +2,7 @@
 
 This is role I made for myself but I tried to make it as reusable as possible while keeping it fitted to my use.
 
-The role **does not** handle the Caddy installation since it's a pain. To install Caddy, go to [addyserver.com/download](https://caddyserver.com/download), choose your modules and use the download link / install script. Once it's done, you can run the role.
+The role **does not** handle the Caddy installation since it's a pain. To install Caddy, go to [caddyserver.com/download](https://caddyserver.com/download), choose your modules and use the download link / install script. Once it's done, you can run the role.
 
 The role will handle all basic config like creating a systemd service, a user, conf folders, conf files, log folders, etc. 
 The role will add the `cap_net_bind_service+ep` capability to the Caddy binary so that it can bind a <1024 port like 80 and 443.
