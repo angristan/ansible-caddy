@@ -1,8 +1,10 @@
 ---
 
 - import_tasks: setup.yml
+  tags: caddy.setup
 
 - include_tasks: vhosts.yml
+  tags: caddy.vhosts
   vars:
     vhost: '{{caddy_vhost_defaults | combine(vhost_)}}'
   loop: '{{ caddy_vhosts }}'
