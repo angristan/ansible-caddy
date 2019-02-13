@@ -6,12 +6,12 @@
     state: reloaded
 
 - name: caddy restart
-  listen: 'service modified'
+  listen: service modified
   service:
     name: caddy
     state: restarted
 
 - name: systemctl daemon-reload
-  listen: 'service modified'
+  listen: service modified
   service:
     daemon_reload: true
