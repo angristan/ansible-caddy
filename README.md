@@ -1,6 +1,6 @@
 # Ansible role for Caddy
 
-This is role I made for myself but I tried to make it as reusable as possible while keeping it fitted to my use.
+This is a role I made for myself but I tried to make it as reusable as possible while keeping it fitted to my use.
 
 The role **does not** handle the Caddy installation since it's a pain. To install Caddy, go to [caddyserver.com/download](https://caddyserver.com/download), choose your modules and use the download link / install script. Once it's done, you can run the role.
 
