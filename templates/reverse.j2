@@ -3,7 +3,9 @@
   import ../snippets/tls.conf
 {% if vhost.gzip %}gzip{% endif %}
   log / {{ caddy_log_path }}/{{ vhost.hostname }}.log {combined}
-  proxy / {{ vhost.reverse_host }}:{{ vhost.reverse_port}}
+  proxy / {{ vhost.reverse_host }}:{{ vhost.reverse_port}} {
+    transparent
+  }
 {% if vhost.security_headers %}
   header / {
       Strict-Transport-Security "max-age=31536000;"
