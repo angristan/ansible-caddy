@@ -24,3 +24,4 @@ caddy_vhost_defaults:
   reverse_host: localhost
   reverse_port: 80
   security_headers: false
+  websocket: false
