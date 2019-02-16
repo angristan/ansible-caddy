@@ -5,3 +5,4 @@
     src: '{{ vhost.template }}'
     dest: '{{ caddy_config_path }}/vhosts/{{ vhost.name }}'
   notify: caddy reload
+  tags: caddy.vhosts
