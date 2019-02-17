@@ -15,5 +15,8 @@
       X-Content-Type-Options "nosniff"
       X-Frame-Options "DENY"
   }
+{% endif -%}
+{% if vhost.basicauth %}
+basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
 {% endif %}
 }
