@@ -18,8 +18,9 @@ Environment=CADDYPATH={{ caddy_ssl_path }}
 Environment={{ caddy_env_var }}
 {% endfor %}
 
+
 ; Always set "-root" to something safe in case it gets forgotten in the Caddyfile.
-ExecStart={{ caddy_bin_path }} -quic -log stdout -agree=true -conf={{ caddy_config_path }}/Caddyfile -root=/var/tmp
+ExecStart={{ caddy_bin_path }} {{ '-quic' if caddy_quic_enabled else '' }} -log stdout -agree=true -conf={{ caddy_config_path }}/Caddyfile -root=/var/tmp
 ExecReload=/bin/kill -USR1 $MAINPID
 
 ; Use graceful shutdown with a reasonable timeout
