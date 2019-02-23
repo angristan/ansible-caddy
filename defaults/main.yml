@@ -22,9 +22,10 @@ caddy_vhosts: []
 caddy_vhost_defaults:
   template: reverse.j2
   gzip: false
-  reverse_host: localhost
-  reverse_port: 80
+  proxy_reverse_host: localhost
+  proxy_reverse_port: 80
+  proxy_transparent: true
+  proxy_websocket: false
   security_headers: false
-  websocket: false
   basicauth: false
   basicauth_path: '/'
