@@ -21,7 +21,7 @@ caddy_tls_dns_enabled: false
 caddy_vhosts: []
 caddy_vhost_defaults:
   template: reverse.j2
-  gzip: false
+  gzip: true
   proxy_reverse_host: localhost
   proxy_reverse_port: 80
   proxy_transparent: true
