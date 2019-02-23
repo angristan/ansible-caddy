@@ -16,6 +16,6 @@
   }
 {% endif -%}
 {% if vhost.basicauth %}
-basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
+  basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
 {% endif %}
 }
