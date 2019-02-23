@@ -1,7 +1,7 @@
 {{ ansible_managed | comment(decoration="# ") }}
 {{ vhost.hostname }} {
   import ../snippets/tls.conf
-  {{ 'gzip' if vhost.gzip else '' -}}
+  {{ 'gzip' if vhost.gzip else '' }}
   log / {{ caddy_log_path }}/{{ vhost.hostname }}.log {combined}
   proxy / {{ vhost.proxy_reverse_host }}:{{ vhost.proxy_reverse_port}} {
     {{ 'transparent' if vhost.proxy_transparent else '' }}
