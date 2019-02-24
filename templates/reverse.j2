@@ -3,7 +3,7 @@
   import ../snippets/tls.conf
   {{ 'gzip' if vhost.gzip else '' }}
   log / {{ caddy_log_path }}/{{ vhost.hostname }}.log {combined}
-  proxy / {{ vhost.proxy_host }}:{{ vhost.proxy_port}} {
+  proxy / {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
     {{ 'transparent' if vhost.proxy_transparent else '' }}
     {{ 'websocket' if vhost.proxy_websocket else '' }}
   }

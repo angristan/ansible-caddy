@@ -23,7 +23,6 @@ caddy_vhost_defaults:
   template: reverse.j2
   gzip: true
   proxy_host: localhost
-  proxy_port: 80
   proxy_transparent: true
   proxy_websocket: false
   security_headers: false
