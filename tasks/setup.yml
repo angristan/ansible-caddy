@@ -60,7 +60,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: caddy restart
+  notify: caddy reload
 
 - name: Copy TLS config snippet
   template:
@@ -69,7 +69,7 @@
     mode: 0644
     src: tls.conf.j2
     dest: '{{ caddy_config_path }}/snippets/tls.conf'
-  notify: caddy restart
+  notify: caddy reload
 
 - name: Enable and start Caddy service
   service:
