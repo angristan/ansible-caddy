@@ -28,3 +28,5 @@ caddy_vhost_defaults:
   security_headers: false
   basicauth: false
   basicauth_path: '/'
+  realip: false
+  realip_from: []
