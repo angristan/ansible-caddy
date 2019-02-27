@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: caddy
   author: angristan
   description: Ansible role for Caddy
   license: MIT
