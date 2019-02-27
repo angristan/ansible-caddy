@@ -6,7 +6,7 @@
 - include_tasks: vhosts.yml
   tags: caddy.vhosts
   vars:
-    vhost: '{{caddy_vhost_defaults | combine(vhost_)}}'
+    vhost: '{{ caddy_vhost_defaults | combine(vhost_) }}'
   loop: '{{ caddy_vhosts }}'
   loop_control:
     loop_var: vhost_
