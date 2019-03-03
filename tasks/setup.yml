@@ -38,6 +38,20 @@
     owner: root
     group: root
 
+- name: Create snippets directory
+  file:
+    path: '{{ caddy_config_path }}/snippets'
+    state: directory
+    owner: root
+    group: root
+
+- name: Create vhosts directory
+  file:
+    path: '{{ caddy_config_path }}/vhosts'
+    state: directory
+    owner: root
+    group: root
+
 - name: Create SSL directory
   file:
     path: '{{ caddy_ssl_path }}'
