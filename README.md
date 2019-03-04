@@ -1,6 +1,6 @@
 # Ansible role for Caddy 
 
-![travis build](https://api.travis-ci.org/angristan/ansible-caddy.svg?branch=master)
+![travis build](https://api.travis-ci.com/angristan/ansible-caddy.svg?branch=master)
 
 This is a role I made for myself but I tried to make it as reusable as possible while keeping it fitted to my use.
 
