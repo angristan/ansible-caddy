@@ -13,8 +13,6 @@ caddy_quic_enabled: true
 
 # TLS
 caddy_tls_key_type: p256
-caddy_tls_ciphers: ECDHE-ECDSA-WITH-CHACHA20-POLY1305 ECDHE-ECDSA-AES128-GCM-SHA256 ECDHE-ECDSA-AES256-GCM-SHA384 ECDHE-ECDSA-AES128-CBC-SHA ECDHE-ECDSA-AES256-CBC-SHA
-caddy_tls_curves: X25519 p521 p384 p256
 caddy_tls_dns_enabled: false
 
 # Vhosts

@@ -30,8 +30,6 @@ A user will be created (`caddy_user_name`), added to a group (`caddy_group_name`
 TLS configuration:
 
 - `caddy_tls_key_type`: key algorithm that will be used to sign the certificates (`p256`)
-- `caddy_tls_ciphers`: the cipher suite. This role's defaults remove unsecure ciphers. (`ECDHE-ECDSA-WITH-CHACHA20-POLY1305 ECDHE-ECDSA-AES128-GCM-SHA256 ECDHE-ECDSA-AES256-GCM-SHA384 ECDHE-ECDSA-AES128-CBC-SHA ECDHE-ECDSA-AES256-CBC-SHA`)
-- `caddy_tls_curves`: ECDHE curves (`X25519 p521 p384 p256`)
 - `caddy_tls_dns_enabled`: enabled the DNS ACME challenged to get certificates. (`false`)
 - `caddy_tls_dns_provider`: if `caddy_tls_dns_enabled` is true, set the DNS provider to use.
 
