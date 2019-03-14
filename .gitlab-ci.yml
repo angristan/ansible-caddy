@@ -1,4 +1,4 @@
-image: python:3.7-alpine
+image: python:3.7-slim
 
 before_script:
   - pip install ansible-lint
