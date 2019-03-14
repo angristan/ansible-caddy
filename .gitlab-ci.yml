@@ -1,9 +1,7 @@
+image: python:3.7-alpine
+
 before_script:
-  - apt-get update -qy
-  - apt-get install -y python-dev python-pip
-  - git submodule update --init
-  - pip install --upgrade ansible ansible-lint
-  - ansible --version
+  - pip install ansible-lint
   - ansible-lint --version
 
 stages:
