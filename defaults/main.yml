@@ -10,6 +10,7 @@ caddy_group_name: www-data
 caddy_user_id: 33
 caddy_group_id: 33
 caddy_quic_enabled: true
+caddy_env_vars: []
 
 # TLS
 caddy_tls_key_type: p256
