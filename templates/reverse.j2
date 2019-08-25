@@ -1,4 +1,10 @@
 {{ ansible_managed | comment(decoration="# ") }}
+{% if vhost.www_redir %}
+www.{{ vhost.hostname }} {
+    import ../snippets/tls.conf
+    redir https://{{ vhost.hostname }}{uri}
+}
+{% endif %}
 {{ vhost.hostname }} {
   import ../snippets/tls.conf
   {{ 'gzip' if vhost.gzip else '' }}
