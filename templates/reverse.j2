@@ -2,7 +2,7 @@
 {% if vhost.www_redir %}
 www.{{ vhost.hostname }} {
     import ../snippets/tls.conf
-    redir https://{{ vhost.hostname }}{uri}
+    redir https://{{ vhost.hostname }}{uri} permanent
 }
 {% endif %}
 {{ vhost.hostname }} {
@@ -15,21 +15,23 @@ www.{{ vhost.hostname }} {
   }
   reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}
 {% if vhost.security_headers %}
-  header / {
-    Strict-Transport-Security "max-age=31536000;"
-    X-XSS-Protection "1; mode=block"
-    X-Content-Type-Options "nosniff"
-    X-Frame-Options "DENY"
+  header {
+    # enable HSTS
+    Strict-Transport-Security max-age=31536000;
+
+    # disable clients from sniffing the media type
+    X-Content-Type-Options nosniff
+
+    # clickjacking protection
+    X-Frame-Options DENY
+
+    # keep referrer data off of HTTP connections
+    Referrer-Policy no-referrer-when-downgrade
   }
 {% endif -%}
 {% if vhost.basicauth %}
-  basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
-{% endif %}
-{% if vhost.realip %}
-#   realip {
-{% for realip in vhost.realip_from %}
-#     from {{ realip }}
-{% endfor %}
-#   }
+  basicauth {{ vhost.basicauth_path }} {
+    {{ vhost.basicauth_user }} {{ vhost.basicauth_password | b64encode }}
+  }
 {% endif %}
 }
