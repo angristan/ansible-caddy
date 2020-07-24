@@ -13,7 +13,13 @@ www.{{ vhost.hostname }} {
       roll_disabled
     }
   }
-  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}
+  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
+    {% if vhost.proxy_transparent_disable %}
+    header_up -X-Forwarded-For
+    header_up -X-Forwarded-Proto
+    header_up -Host
+    {% endif -%}
+  }
 {% if vhost.security_headers %}
   header {
     # enable HSTS
@@ -29,6 +35,7 @@ www.{{ vhost.hostname }} {
     Referrer-Policy no-referrer-when-downgrade
   }
 {% endif -%}
+
 {% if vhost.basicauth %}
   basicauth {{ vhost.basicauth_path }} {
     {{ vhost.basicauth_user }} {{ vhost.basicauth_password | b64encode }}

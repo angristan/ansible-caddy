@@ -19,9 +19,8 @@ caddy_vhost_defaults:
   template: reverse.j2
   compress: true
   proxy_host: localhost
+  proxy_transparent_disable: false
   security_headers: false
   basicauth: false
   basicauth_path: '/'
-  realip: false
-  realip_from: []
   www_redir: false

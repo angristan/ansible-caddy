@@ -4,6 +4,7 @@
     src: bin/caddy
     dest: '{{ caddy_bin_path }}'
     mode: '0755'
+  notify: caddy restart
 
 - name: Add caddy group
   group:
