@@ -1,7 +1,6 @@
 {{ ansible_managed | comment(decoration="# ") }}
 tls {
-  {% if caddy_tls_dns_enabled -%}
-  dns {{ caddy_tls_dns_provider }}
+  {% if caddy_tls_dns_cloudflare_enabled -%}
+  dns cloudflare {env.CLOUDFLARE_API_TOKEN}
   {% endif -%}
-  key_type {{ caddy_tls_key_type }}
 }

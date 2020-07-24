@@ -7,13 +7,13 @@ www.{{ vhost.hostname }} {
 {% endif %}
 {{ vhost.hostname }} {
   import ../snippets/tls.conf
-  {{ 'gzip' if vhost.gzip else '' }}
-  log / {{ caddy_log_path }}/{{ vhost.hostname }}.log {combined}
-  errors {{ caddy_log_path }}/{{ vhost.hostname }}_errors.log
-  proxy / {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
-    {{ 'transparent' if vhost.proxy_transparent else '' }}
-    {{ 'websocket' if vhost.proxy_websocket else '' }}
+  {{ 'encode zstd gzip' if vhost.compress else '' }}
+  log {
+    output file {{ caddy_log_path }}/{{ vhost.hostname }}.log {
+      roll_disabled
+    }
   }
+  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}
 {% if vhost.security_headers %}
   header / {
     Strict-Transport-Security "max-age=31536000;"

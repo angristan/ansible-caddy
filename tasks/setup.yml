@@ -1,13 +1,18 @@
 ---
+- name: Upload caddy binary
+  copy:
+    src: bin/caddy
+    dest: '{{ caddy_bin_path }}'
+    mode: '0755'
 
-- name: Install setcap
-  apt:
-    name: libcap2-bin
+# - name: Install setcap
+#   apt:
+#     name: libcap2-bin
 
-- name: Set capability on the caddy binary file to be able to bind to TCP port <1024
-  capabilities:
-    path: '{{ caddy_bin_path }}'
-    capability: cap_net_bind_service+ep
+# - name: Set capability on the caddy binary file to be able to bind to TCP port <1024
+#   capabilities:
+#     path: '{{ caddy_bin_path }}'
+#     capability: cap_net_bind_service+ep
 
 - name: Add caddy group
   group:
@@ -19,8 +24,8 @@
     name: '{{ caddy_user_name }}'
     uid: '{{ caddy_user_id }}'
     group: '{{ caddy_group_id }}'
-    home: '/var/www'
-    create_home: false
+    home: '{{ caddy_user_home_dir }}'
+    create_home: true
     shell: '/usr/sbin/nologin'
     system: true
 
@@ -35,30 +40,22 @@
   file:
     path: '{{ caddy_config_path }}'
     state: directory
-    owner: root
-    group: root
+    owner: caddy
+    group: caddy
 
 - name: Create snippets directory
   file:
     path: '{{ caddy_config_path }}/snippets'
     state: directory
-    owner: root
-    group: root
+    owner: caddy
+    group: caddy
 
 - name: Create vhosts directory
   file:
     path: '{{ caddy_config_path }}/vhosts'
     state: directory
-    owner: root
-    group: root
-
-- name: Create SSL directory
-  file:
-    path: '{{ caddy_ssl_path }}'
-    state: directory
-    owner: root
-    group: '{{ caddy_user_name }}'
-    mode: 0770
+    owner: caddy
+    group: caddy
 
 - name: Create log directory
   file:
@@ -71,15 +68,15 @@
   copy:
     src: Caddyfile
     dest: '{{ caddy_config_path }}/Caddyfile'
-    owner: root
-    group: root
+    owner: caddy
+    group: caddy
     mode: 0644
   notify: caddy reload
 
 - name: Copy TLS config snippet
   template:
-    owner: root
-    group: root
+    owner: caddy
+    group: caddy
     mode: 0644
     src: tls.conf.j2
     dest: '{{ caddy_config_path }}/snippets/tls.conf'
