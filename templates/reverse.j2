@@ -26,10 +26,10 @@ www.{{ vhost.hostname }} {
   basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
 {% endif %}
 {% if vhost.realip %}
-  realip {
+#   realip {
 {% for realip in vhost.realip_from %}
-    from {{ realip }}
+#     from {{ realip }}
 {% endfor %}
-  }
+#   }
 {% endif %}
 }
