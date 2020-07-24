@@ -5,15 +5,6 @@
     dest: '{{ caddy_bin_path }}'
     mode: '0755'
 
-# - name: Install setcap
-#   apt:
-#     name: libcap2-bin
-
-# - name: Set capability on the caddy binary file to be able to bind to TCP port <1024
-#   capabilities:
-#     path: '{{ caddy_bin_path }}'
-#     capability: cap_net_bind_service+ep
-
 - name: Add caddy group
   group:
     name: '{{ caddy_group_name }}'
