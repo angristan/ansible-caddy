@@ -46,6 +46,8 @@ caddy_vhosts:
     proxy_host: http://10.0.0.1
     gzip: compress
     security_headers: true
+    responds: ['/forbidden 403']
+    rewrites: ['* /path{uri}']
   - name: site2
     hostname: site1.domain.tld
     template: custom_template.j2
