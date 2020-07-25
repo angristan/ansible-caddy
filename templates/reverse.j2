@@ -10,7 +10,7 @@ www.{{ vhost.hostname }} {
   {{ 'encode zstd gzip' if vhost.compress else '' }}
   log {
     output file {{ caddy_log_path }}/{{ vhost.hostname }}.log {
-      roll_disabled
+      # roll_disabled
     }
   }
   reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
@@ -38,7 +38,7 @@ www.{{ vhost.hostname }} {
 
 {% if vhost.basicauth %}
   basicauth {{ vhost.basicauth_path }} {
-    {{ vhost.basicauth_user }} {{ vhost.basicauth_password | b64encode }}
+    {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
   }
 {% endif %}
 }
