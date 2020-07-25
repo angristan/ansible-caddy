@@ -24,3 +24,5 @@ caddy_vhost_defaults:
   basicauth: false
   basicauth_path: '/'
   www_redir: false
+  responds: []
+  rewrites: []

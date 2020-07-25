@@ -1,10 +1,12 @@
 {{ ansible_managed | comment(decoration="# ") }}
+
 {% if vhost.www_redir %}
 www.{{ vhost.hostname }} {
     import ../snippets/tls.conf
     redir https://{{ vhost.hostname }}{uri} permanent
 }
 {% endif %}
+
 {{ vhost.hostname }} {
   import ../snippets/tls.conf
   {{ 'encode zstd gzip' if vhost.compress else '' }}
@@ -13,13 +15,22 @@ www.{{ vhost.hostname }} {
       # roll_disabled
     }
   }
-  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
-    {% if vhost.proxy_transparent_disable %}
+
+{% for respond in vhost.responds %}
+  respond {{ respond }}
+{% endfor %}
+
+{% for rewrite in vhost.rewrites %}
+  rewrite {{ rewrite }}
+{% endfor %}
+
+  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}{% if vhost.proxy_transparent_disable %} {
     header_up -X-Forwarded-For
     header_up -X-Forwarded-Proto
     header_up -Host
-    {% endif -%}
   }
+{% endif %}
+
 {% if vhost.security_headers %}
   header {
     # enable HSTS
@@ -34,7 +45,7 @@ www.{{ vhost.hostname }} {
     # keep referrer data off of HTTP connections
     Referrer-Policy no-referrer-when-downgrade
   }
-{% endif -%}
+{% endif %}
 
 {% if vhost.basicauth %}
   basicauth {{ vhost.basicauth_path }} {
