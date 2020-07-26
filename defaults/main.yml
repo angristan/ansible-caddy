@@ -1,32 +1,28 @@
 ---
-
 # Config
-caddy_bin_path: /usr/local/bin/caddy
+caddy_bin_path: /usr/bin/caddy
 caddy_log_path: /var/log/caddy
 caddy_config_path: /etc/caddy
-caddy_ssl_path: /etc/ssl/caddy
-caddy_user_name: www-data
-caddy_group_name: www-data
-caddy_user_id: 33
-caddy_group_id: 33
-caddy_quic_enabled: true
+caddy_user_name: caddy
+caddy_group_name: caddy
+caddy_user_home_dir: /var/lib/caddy
+caddy_user_id: 333
+caddy_group_id: 333
 caddy_env_vars: []
 
 # TLS
-caddy_tls_key_type: p256
-caddy_tls_dns_enabled: false
+caddy_tls_dns_cloudflare_enabled: false
 
 # Vhosts
 caddy_vhosts: []
 caddy_vhost_defaults:
   template: reverse.j2
-  gzip: true
+  compress: true
   proxy_host: localhost
-  proxy_transparent: true
-  proxy_websocket: false
+  proxy_transparent_disable: false
   security_headers: false
   basicauth: false
   basicauth_path: '/'
-  realip: false
-  realip_from: []
   www_redir: false
+  responds: []
+  rewrites: []

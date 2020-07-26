@@ -1,35 +1,55 @@
 {{ ansible_managed | comment(decoration="# ") }}
+
 {% if vhost.www_redir %}
 www.{{ vhost.hostname }} {
     import ../snippets/tls.conf
-    redir https://{{ vhost.hostname }}{uri}
+    redir https://{{ vhost.hostname }}{uri} permanent
 }
 {% endif %}
+
 {{ vhost.hostname }} {
   import ../snippets/tls.conf
-  {{ 'gzip' if vhost.gzip else '' }}
-  log / {{ caddy_log_path }}/{{ vhost.hostname }}.log {combined}
-  errors {{ caddy_log_path }}/{{ vhost.hostname }}_errors.log
-  proxy / {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }} {
-    {{ 'transparent' if vhost.proxy_transparent else '' }}
-    {{ 'websocket' if vhost.proxy_websocket else '' }}
+  {{ 'encode zstd gzip' if vhost.compress else '' }}
+  log {
+    output file {{ caddy_log_path }}/{{ vhost.hostname }}.log {
+      # roll_disabled
+    }
   }
-{% if vhost.security_headers %}
-  header / {
-    Strict-Transport-Security "max-age=31536000;"
-    X-XSS-Protection "1; mode=block"
-    X-Content-Type-Options "nosniff"
-    X-Frame-Options "DENY"
-  }
-{% endif -%}
-{% if vhost.basicauth %}
-  basicauth {{ vhost.basicauth_path }} {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
-{% endif %}
-{% if vhost.realip %}
-  realip {
-{% for realip in vhost.realip_from %}
-    from {{ realip }}
+
+{% for respond in vhost.responds %}
+  respond {{ respond }}
 {% endfor %}
+
+{% for rewrite in vhost.rewrites %}
+  rewrite {{ rewrite }}
+{% endfor %}
+
+  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}{% if vhost.proxy_transparent_disable %} {
+    header_up -X-Forwarded-For
+    header_up -X-Forwarded-Proto
+    header_up -Host
+  }
+{% endif %}
+
+{% if vhost.security_headers %}
+  header {
+    # enable HSTS
+    Strict-Transport-Security max-age=31536000;
+
+    # disable clients from sniffing the media type
+    X-Content-Type-Options nosniff
+
+    # clickjacking protection
+    X-Frame-Options DENY
+
+    # keep referrer data off of HTTP connections
+    Referrer-Policy no-referrer-when-downgrade
+  }
+{% endif %}
+
+{% if vhost.basicauth %}
+  basicauth {{ vhost.basicauth_path }} {
+    {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
   }
 {% endif %}
 }
