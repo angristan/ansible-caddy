@@ -18,11 +18,15 @@ caddy_vhosts: []
 caddy_vhost_defaults:
   template: reverse.j2
   compress: true
-  proxy_host: localhost
+  proxy_host: null
   proxy_transparent_disable: false
   security_headers: false
   basicauth: false
   basicauth_path: '/'
   www_redir: false
+  root: null
+  php_fastcgi_enabled: null
+  php_fastcgi_path: null
   responds: []
   rewrites: []
+  file_server: false
