@@ -16,22 +16,39 @@ www.{{ vhost.hostname }} {
     }
   }
 
+{% if vhost.root %}
+  root {{ vhost.root }}
+{% endif -%}
+
+{% if vhost.file_server %}
+  file_server
+{% endif -%}
+
 {% for respond in vhost.responds %}
   respond {{ respond }}
-{% endfor %}
+{% endfor -%}
 
 {% for rewrite in vhost.rewrites %}
   rewrite {{ rewrite }}
-{% endfor %}
+{% endfor -%}
 
-  reverse_proxy {{ vhost.proxy_host }}{{ ":" ~ vhost.proxy_port if vhost.proxy_port is defined else '' }}{% if vhost.proxy_transparent_disable %} {
+{% if vhost.proxy_host %}
+  reverse_proxy {{ vhost.proxy_host }}{% if vhost.proxy_transparent_disable %} {
     header_up -X-Forwarded-For
     header_up -X-Forwarded-Proto
     header_up -Host
-  }
+  } {% endif %}
 {% endif %}
 
-{% if vhost.security_headers %}
+{% if vhost.php_fastcgi_enabled %}
+{% if vhost.php_fastcgi_path %}
+  php_fastcgi {{ vhost.php_fastcgi_path }}
+{% else %}
+  php_fastcgi unix//run/php/php-fpm-{{ vhost.name }}.sock
+{% endif %}
+{% endif %}
+
+{%- if vhost.security_headers %}
   header {
     # enable HSTS
     Strict-Transport-Security max-age=31536000;
@@ -47,7 +64,7 @@ www.{{ vhost.hostname }} {
   }
 {% endif %}
 
-{% if vhost.basicauth %}
+{%- if vhost.basicauth %}
   basicauth {{ vhost.basicauth_path }} {
     {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
   }
