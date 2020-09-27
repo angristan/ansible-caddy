@@ -1,8 +1,8 @@
 ---
-
 - name: Add vhost
   template:
     src: '{{ vhost.template }}'
     dest: '{{ caddy_config_path }}/vhosts/{{ vhost.name }}'
+    mode: 0644
   notify: caddy reload
   tags: caddy.vhosts

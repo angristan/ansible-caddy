@@ -34,6 +34,7 @@
     state: directory
     owner: caddy
     group: caddy
+    mode: 0644
 
 - name: Create snippets directory
   file:
@@ -41,6 +42,7 @@
     state: directory
     owner: caddy
     group: caddy
+    mode: 0644
 
 - name: Create vhosts directory
   file:
@@ -48,6 +50,7 @@
     state: directory
     owner: caddy
     group: caddy
+    mode: 0644
 
 - name: Create log directory
   file:
@@ -55,6 +58,7 @@
     state: directory
     owner: '{{ caddy_user_name }}'
     group: '{{ caddy_user_name }}'
+    mode: 0644
 
 - name: Add Caddyfile
   copy:
