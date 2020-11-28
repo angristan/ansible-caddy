@@ -51,6 +51,7 @@
     path: '{{ caddy_log_path }}'
     state: directory
     mode: 0755
+    owner: caddy
 
 - name: Add Caddyfile
   copy:
