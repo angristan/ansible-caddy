@@ -1,7 +1,7 @@
 ---
 - name: Upload caddy binary
   copy:
-    src: bin/caddy
+    src: '{{ caddy_src_bin }}'
     dest: '{{ caddy_bin_path }}'
     mode: '0755'
   notify: caddy restart

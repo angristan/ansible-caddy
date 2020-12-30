@@ -1,5 +1,6 @@
 ---
 # Config
+caddy_src_bin: bin/caddy
 caddy_bin_path: /usr/bin/caddy
 caddy_log_path: /var/log/caddy
 caddy_config_path: /etc/caddy
