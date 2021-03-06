@@ -65,7 +65,7 @@ www.{{ vhost.hostname }} {
 {% endif %}
 
 {%- if vhost.basicauth %}
-  basicauth {{ vhost.basicauth_path }} {
+  basicauth {{ vhost.basicauth_path }}* {
     {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
   }
 {% endif %}
