@@ -30,14 +30,33 @@ www.{{ vhost.hostname }} {
 
 {% for rewrite in vhost.rewrites %}
   rewrite {{ rewrite }}
-{% endfor -%}
+{% endfor %}
+
+{% if vhost.protected_enabled %}
+  @protected {
+{% if vhost.protected_remote_ips|length > 0 %}
+    remote_ip forwarded {% for ip in vhost.protected_remote_ips %}{{ ip }} {% endfor %}
+
+{% endif %}
+{% if vhost.protected_header_name %}
+    header {{ vhost.protected_header_name }} {{ vhost.protected_header_value }}
+{% endif %}
+  }
+{% endif %}
 
 {% if vhost.proxy_host %}
-  reverse_proxy {{ vhost.proxy_host }}{% if vhost.proxy_transparent_disable %} {
+{% if vhost.protected_enabled %}
+  handle @protected {
+{% endif %}
+    reverse_proxy {{ vhost.proxy_host }}{% if vhost.proxy_transparent_disable %} {
     header_up -X-Forwarded-For
     header_up -X-Forwarded-Proto
     header_up -Host
   } {% endif %}
+{% if vhost.protected_enabled %}
+
+  }
+{% endif %}
 {% endif %}
 
 {% if vhost.php_fastcgi_enabled %}
@@ -68,5 +87,9 @@ www.{{ vhost.hostname }} {
   basicauth {{ vhost.basicauth_path }}* {
     {{ vhost.basicauth_user }} {{ vhost.basicauth_password }}
   }
+{% endif %}
+
+{% if vhost.protected_enabled %}
+  respond 403
 {% endif %}
 }
