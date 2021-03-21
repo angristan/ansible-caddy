@@ -21,7 +21,11 @@ www.{{ vhost.hostname }} {
 {% endif -%}
 
 {% if vhost.file_server %}
+{% if vhost.file_server_browse %}
+  file_server browse
+{% else %}
   file_server
+{% endif -%}
 {% endif -%}
 
 {% for respond in vhost.responds %}

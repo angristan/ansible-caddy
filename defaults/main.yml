@@ -31,6 +31,7 @@ caddy_vhost_defaults:
   responds: []
   rewrites: []
   file_server: false
+  file_server_browse: false
   protected_enabled: false
   protected_remote_ips: []
   protected_header_name: null
