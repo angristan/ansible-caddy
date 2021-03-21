@@ -36,3 +36,4 @@ caddy_vhost_defaults:
   protected_remote_ips: []
   protected_header_name: null
   protected_header_value: null
+  bind: null

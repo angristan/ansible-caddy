@@ -16,6 +16,10 @@ www.{{ vhost.hostname }} {
     }
   }
 
+{% if vhost.bind %}
+  bind {{ vhost.bind }}
+{% endif -%}
+
 {% if vhost.root %}
   root {{ vhost.root }}
 {% endif -%}
