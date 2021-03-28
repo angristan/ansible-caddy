@@ -10,6 +10,7 @@ caddy_user_home_dir: /var/lib/caddy
 caddy_user_id: 333
 caddy_group_id: 33
 caddy_env_vars: []
+caddy_service_after_units: []
 
 # TLS
 caddy_tls_dns_cloudflare_enabled: false

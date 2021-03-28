@@ -3,7 +3,7 @@
 [Unit]
 Description=Caddy
 Documentation=https://caddyserver.com/docs/
-After=network.target
+After=network.target {% for unit in caddy_service_after_units %}{{ unit }}{% endfor %}
 
 [Service]
 User={{ caddy_user_name }}
