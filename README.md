@@ -69,9 +69,15 @@ By default, the vhosts will use the `reverse.j2` template included in the role. 
         hostname: 'website.tld'
 ```
 
-## License
+## Usage
 
-MIT
+Add this to `requirements.yml`:
+
+```yml
+- src: https://github.com/angristan/ansible-caddy
+  name: angristan.caddy
+  version: vX.X.X
+```
 
 ## Author Information
 
