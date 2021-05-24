@@ -62,7 +62,8 @@ By default, the vhosts will use the `reverse.j2` template included in the role. 
 ```yaml
 ---
 - hosts: myhost
-  roles: caddy
+  roles:
+    - { role: angristan.caddy, tags: caddy }
   vars:
     caddy_vhosts:
       - name: 'website'
