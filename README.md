@@ -28,7 +28,7 @@ Use this config to use the Cloudflare API for the DNS-01 ACME challenge:
 cloudflare_token: xxx
 caddy_tls_dns_cloudflare_enabled: true
 caddy_env_vars:
-  - 'CLOUDFLARE_API_TOKEN={{ cloudflare_token }}'
+  - "CLOUDFLARE_API_TOKEN={{ cloudflare_token }}"
 ```
 
 Otherwise, Caddy will default to HTTP-01 or TLS-ALPN-01.
@@ -46,11 +46,11 @@ caddy_vhosts:
     proxy_host: http://10.0.0.1
     gzip: compress
     security_headers: true
-    responds: ['/forbidden 403']
-    rewrites: ['* /path{uri}']
+    responds: ["/forbidden 403"]
+    rewrites: ["* /path{uri}"]
   - name: site2
     hostname: site1.domain.tld
-    template: custom_template.j2
+    ansible.builtin.template: custom_template.j2
 ```
 
 By default, the vhosts will use the `reverse.j2` template included in the role. Look at it and the `defaults/main.yml` file for all variables!
@@ -66,8 +66,8 @@ By default, the vhosts will use the `reverse.j2` template included in the role. 
     - { role: angristan.caddy, tags: caddy }
   vars:
     caddy_vhosts:
-      - name: 'website'
-        hostname: 'website.tld'
+      - name: "website"
+        hostname: "website.tld"
 ```
 
 ## Usage

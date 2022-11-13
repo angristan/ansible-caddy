@@ -11,6 +11,7 @@ caddy_user_id: 333
 caddy_group_id: 33
 caddy_env_vars: []
 caddy_service_after_units: []
+caddy_metrics_enabled: true
 
 # TLS
 caddy_tls_dns_cloudflare_enabled: false
@@ -24,7 +25,7 @@ caddy_vhost_defaults:
   proxy_transparent_disable: false
   security_headers: false
   basicauth: false
-  basicauth_path: '/'
+  basicauth_path: "/"
   www_redir: false
   root: null
   php_fastcgi_enabled: null

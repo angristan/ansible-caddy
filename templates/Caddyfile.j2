@@ -1,0 +1,9 @@
+{% if caddy_metrics_enabled %}
+{
+  servers {
+    metrics
+  }
+}
+{% endif %}
+
+import vhosts/*

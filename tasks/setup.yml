@@ -1,70 +1,70 @@
 ---
 - name: Upload caddy binary
-  copy:
-    src: '{{ caddy_src_bin }}'
-    dest: '{{ caddy_bin_path }}'
-    mode: '0755'
+  ansible.builtin.copy:
+    src: "{{ caddy_src_bin }}"
+    dest: "{{ caddy_bin_path }}"
+    mode: "0755"
   notify: caddy restart
 
 - name: Add caddy group
-  group:
-    name: '{{ caddy_group_name }}'
-    gid: '{{ caddy_group_id }}'
+  ansible.builtin.group:
+    name: "{{ caddy_group_name }}"
+    gid: "{{ caddy_group_id }}"
 
 - name: Add caddy user
-  user:
-    name: '{{ caddy_user_name }}'
-    uid: '{{ caddy_user_id }}'
-    group: '{{ caddy_group_id }}'
-    home: '{{ caddy_user_home_dir }}'
+  ansible.builtin.user:
+    name: "{{ caddy_user_name }}"
+    uid: "{{ caddy_user_id }}"
+    group: "{{ caddy_group_id }}"
+    home: "{{ caddy_user_home_dir }}"
     create_home: true
-    shell: '/usr/sbin/nologin'
+    shell: "/usr/sbin/nologin"
     system: true
 
 - name: Create Caddy systemd unit file
-  template:
+  ansible.builtin.template:
     src: caddy.service.j2
     dest: /etc/systemd/system/caddy.service
     mode: 0644
   notify: service modified
 
 - name: Create config directory
-  file:
-    path: '{{ caddy_config_path }}'
+  ansible.builtin.file:
+    path: "{{ caddy_config_path }}"
     state: directory
     mode: 0755
 
 - name: Create snippets directory
-  file:
-    path: '{{ caddy_config_path }}/snippets'
+  ansible.builtin.file:
+    path: "{{ caddy_config_path }}/snippets"
     state: directory
     mode: 0755
 
 - name: Create vhosts directory
-  file:
-    path: '{{ caddy_config_path }}/vhosts'
+  ansible.builtin.file:
+    path: "{{ caddy_config_path }}/vhosts"
     state: directory
     mode: 0755
 
 - name: Create log directory
-  file:
-    path: '{{ caddy_log_path }}'
+  ansible.builtin.file:
+    path: "{{ caddy_log_path }}"
     state: directory
     mode: 0755
     owner: caddy
 
 - name: Add Caddyfile
-  copy:
-    src: Caddyfile
-    dest: '{{ caddy_config_path }}/Caddyfile'
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: "{{ caddy_config_path }}/Caddyfile"
     mode: 0644
   notify: caddy reload
 
 - name: Copy TLS config snippet
-  template:
+  ansible.builtin.template:
     mode: 0644
     src: tls.conf.j2
-    dest: '{{ caddy_config_path }}/snippets/tls.conf'
+    dest: "{{ caddy_config_path }}/snippets/tls.conf"
   notify: caddy reload
 
 - name: Enable and start Caddy service
