@@ -1,8 +1,10 @@
 ---
-- ansible.builtin.import_tasks: setup.yml
+- name: Install Caddy
+  ansible.builtin.import_tasks: setup.yml
   tags: caddy.setup
 
-- ansible.builtin.include_tasks: vhosts.yml
+- name: Configure Caddy
+  ansible.builtin.include_tasks: vhosts.yml
   tags: caddy.vhosts
   vars:
     vhost: "{{ caddy_vhost_defaults | combine(vhost_) }}"
