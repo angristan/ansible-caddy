@@ -1,17 +1,16 @@
 ---
-
 - name: caddy reload
-  service:
+  ansible.builtin.service:
     name: caddy
     state: reloaded
 
 - name: caddy restart
   listen: service modified
-  service:
+  ansible.builtin.service:
     name: caddy
     state: restarted
 
 - name: systemctl daemon-reload
   listen: service modified
-  service:
+  ansible.builtin.service:
     daemon_reload: true

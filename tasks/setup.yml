@@ -68,7 +68,7 @@
   notify: caddy reload
 
 - name: Enable and start Caddy service
-  service:
+  ansible.builtin.service:
     name: caddy.service
     state: started
     enabled: true
