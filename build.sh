@@ -3,7 +3,7 @@
 export GOOS=linux
 export GOARCH=amd64
 
-# go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 xcaddy build --with github.com/caddy-dns/cloudflare --output bin/caddy
 # xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/lindenlab/caddy-s3-proxy --output bin/caddy
 # xcaddy build --with github.com/caddy-dns/cloudflare --with github.com/greenpau/caddy-auth-jwt --with github.com/greenpau/caddy-auth-portal --output bin/caddy-auth
