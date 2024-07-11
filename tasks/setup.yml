@@ -4,7 +4,7 @@
     src: "{{ caddy_src_bin }}"
     dest: "{{ caddy_bin_path }}"
     mode: "0755"
-  notify: caddy restart
+  notify: Restart caddy
 
 - name: Add caddy group
   ansible.builtin.group:
