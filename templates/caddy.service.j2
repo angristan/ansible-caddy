@@ -4,7 +4,7 @@
 Description=Caddy
 Documentation=https://caddyserver.com/docs/
 After=network.target {% for unit in caddy_service_after_units %}{{ unit }}{% endfor %}{{''}}
-StartLimitInterval=60
+StartLimitIntervalSec=60
 StartLimitBurst=10
 
 [Service]
