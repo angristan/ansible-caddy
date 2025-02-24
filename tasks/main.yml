@@ -3,6 +3,22 @@
   ansible.builtin.import_tasks: setup.yml
   tags: caddy.setup
 
+- name: Clean up old Caddy vhost files
+  tags: caddy.vhosts
+  ansible.builtin.find:
+    paths: "{{ caddy_config_path }}/vhosts"
+    patterns: "*"
+  register: existing_vhosts
+  when: caddy_rm_unmanaged_vhosts
+
+- name: Remove old Caddy vhost files
+  tags: caddy.vhosts
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ existing_vhosts.files | default([]) }}"
+  when: item.path | basename not in caddy_vhosts | map(attribute='name') | list
+
 - name: Configure Caddy
   ansible.builtin.include_tasks: vhosts.yml
   tags: caddy.vhosts

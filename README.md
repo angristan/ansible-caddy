@@ -36,6 +36,7 @@ Otherwise, Caddy will default to HTTP-01 or TLS-ALPN-01.
 Vhosts configuration:
 
 - `caddy_vhosts`: list of vhosts. (`[]`)
+- `caddy_rm_unmanaged_vhosts`: remove unmanaged vhosts (default `false`)
 
 Example:
 
