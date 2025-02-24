@@ -39,3 +39,4 @@ caddy_vhost_defaults:
   protected_header_name: null
   protected_header_value: null
   bind: null
+caddy_rm_unmanaged_vhosts: false
