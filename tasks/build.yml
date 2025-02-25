@@ -1,0 +1,20 @@
+---
+- name: Check if caddy bin exists
+  stat:
+    path: bin/caddy
+  register: caddy_check
+  tags: caddy.build
+- name: Build caddy with docker
+  when: not caddy_check.stat.exists
+  tags: caddy.build
+  community.docker.docker_container:
+    name: caddy_builder
+    detach: false
+    auto_remove: true
+    image: caddy:builder
+    command: sh -c "xcaddy build --with github.com/caddy-dns/cloudflare && cp /usr/bin/caddy /output/"
+    volumes:
+      - "{{ lookup('env', 'PWD') }}/roles/angristan.caddy/bin:/output"
+    env:
+      GOOS: linux
+      GOARCH: amd64

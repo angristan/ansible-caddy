@@ -11,6 +11,18 @@ The role should work on all Debian-based distributions.
 ## Requirements
 
 This role does not install Caddy from APT because I want the cloudflare module. Run `build.sh` to build a caddy binary.
+Alternatively, add this to build caddy locally, using docker:
+
+```yml
+- hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Build caddy
+      tags: caddy
+      ansible.builtin.import_role:
+        name: angristan.caddy
+        tasks_from: build
+```
 
 ## Role Variables
 
